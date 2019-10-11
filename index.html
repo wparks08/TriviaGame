@@ -4,13 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Final Fantasy Trivia</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
+    <div class="container">
+        <h1 class="text-center m-5 display-2">Final Fantasy Trivia</h1>
+        <h3 class="text-center mb-3">Time Remaining: <span id="seconds"></span> seconds</h3>
+        <h2 class="text-center mb-3" id="question"></h2>
+        <h2 class="text-center answer" id="answer-1">a1</h2>
+        <h2 class="text-center answer" id="answer-2">a2</h2>
+        <h2 class="text-center answer" id="answer-3">a3</h2>
+        <h2 class="text-center answer" id="answer-4">a4</h2>
+    </div>
     
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
