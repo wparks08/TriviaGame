@@ -16,6 +16,7 @@ var questionIndex = 0;
 const numberOfQuestions = questions.length;
 var correctAnswers = 0;
 var incorrectAnswers = 0;
+var answerGiven;
 
 const SECONDS_TO_ANSWER = 30;
 const SECONDS_TO_REVIEW = 10;
@@ -24,8 +25,15 @@ var intervalId;
 var timeoutId;
 
 function startGame() {
+    init();
     currentQuestion = questions[0];
     showQuestion();
+}
+
+function init() {
+    questionIndex = 0;
+    correctAnswers = 0;
+    incorrectAnswers = 0;
 }
 
 function nextQuestion() {
@@ -39,6 +47,7 @@ function nextQuestion() {
 }
 
 function showQuestion() {
+    answerGiven = false;
     setTimer(SECONDS_TO_ANSWER);
     startTimer(showReview);
     showQuestionText();
@@ -67,20 +76,71 @@ function showOptions() {
 }
 
 function processAnswer() {
-    console.log(currentQuestion.isAnswerCorrect($(this).data("index")));
+    currentQuestion.answer($(this).data("index"));
+    answerGiven = true;
     showReview()
 }
 
 function showReview() {
     clearOptions();
-    $("#options").append($("<h3>Out of time!</h3>"));
+    if (answerGiven) {
+        showAnswerResult();
+    } else {
+        $("#options").append(
+            $("<h3>Out of time!</h3>")
+                .on("click", nextQuestion)
+            );
+    }
+    
     setTimer(SECONDS_TO_REVIEW);
     startTimer(nextQuestion);
 }
 
+function showAnswerResult() {
+    if (currentQuestion.answeredCorrectly) {
+        showCorrect();
+        correctAnswers++;
+    } else {
+        showIncorrect();
+        incorrectAnswers++;
+    }
+}
+
+function showCorrect() {
+    $("#options").append(
+        $("<h3>Correct!</h3>")
+            .on("click", nextQuestion)
+    );
+}
+
+function showIncorrect() {
+    $("#options").append(
+        $("<h3>Inorrect!</h3>")
+            .on("click", nextQuestion)
+    );
+}
+
 function showResults() {
     clearOptions();
-    $("#options").append($("<h3>Game has ended!</h3>"));
+    clearQuestion();
+    clearTimers();
+    $("#options")
+        .append($("<h3>Game has ended!</h3>"))
+        .append($(`<h4>Correct answers: ${correctAnswers}</h4>`))
+        .append($(`<h4>Incorrect answers: ${incorrectAnswers}</h4>`))
+        .append(
+            $("<button id='start-game' class='btn btn-primary'>Start Game</button>")
+                .on("click", startGame)
+            );
+}
+
+function clearQuestion() {
+    $("#question").empty();
+}
+
+function clearTimers() {
+    clearInterval(intervalId);
+    clearTimeout(timeoutId);
 }
 
 function showSecondsRemaining() {
@@ -93,8 +153,7 @@ function setTimer(time) {
 }
 
 function startTimer(onComplete) {
-    clearInterval(intervalId);
-    clearTimeout(timeoutId);
+    clearTimers();
     intervalId = setInterval(decrement, 1000);
     timeoutId = setTimeout(onComplete, secondsRemaining * 1000);
 }
@@ -109,4 +168,4 @@ function decrement() {
     }
 }
 
-startGame();
+$("#start-game").on("click", startGame);

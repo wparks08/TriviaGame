@@ -13,8 +13,8 @@ class Question {
         this.answeredCorrectly = false;
     }
 
-    isAnswerCorrect(index) {
-        return index == this.answerIndex;
+    answer(index) {
+        this.answeredCorrectly = index == this.answerIndex;
     }
 
     getOption(index) {
