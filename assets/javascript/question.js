@@ -10,6 +10,7 @@ class Question {
         this.options = options;
         this.optionCount = options.length;
         this.answerIndex = answerIndex;
+        this.answeredCorrectly = false;
     }
 
     isAnswerCorrect(index) {
