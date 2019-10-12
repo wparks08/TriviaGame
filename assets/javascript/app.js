@@ -26,6 +26,7 @@ var timeoutId;
 
 function startGame() {
     init();
+    $("#timer").html("Time Remaining: <span id='seconds'></span> seconds");
     currentQuestion = questions[0];
     showQuestion();
 }
@@ -124,8 +125,8 @@ function showResults() {
     clearOptions();
     clearQuestion();
     clearTimers();
+    $("#timer").html("Click Start Game to play again!");
     $("#options")
-        .append($("<h3>Game has ended!</h3>"))
         .append($(`<h4>Correct answers: ${correctAnswers}</h4>`))
         .append($(`<h4>Incorrect answers: ${incorrectAnswers}</h4>`))
         .append(
@@ -169,3 +170,11 @@ function decrement() {
 }
 
 $("#start-game").on("click", startGame);
+
+$(".option").on("mouseover", function() {
+    let img = $("<img>")
+        .attr("src", "../images/FF7Cursor.png")
+        .addClass("selected");
+    this.prepend(img);
+    this.prepend(div);
+})

@@ -1,0 +1,48 @@
+@font-face {
+    font-family: "finalfantasy";
+    src: url("../fonts/final-fantasy.ttf");
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    background: black;
+    color: #eff1ff;
+    text-shadow: 2px 2px #212421,
+                    1px 1px #212021;
+    letter-spacing: .2em;
+}
+
+.container {
+    /*Thanks to codepen.io/terrancerobb/pen/bnuqe for the FF style window and border */
+    font-family: "finalfantasy";
+    border: solid 2px #424542;
+    box-shadow: 3px 3px #e7dfe7,
+              -3px -3px #e7dfe7,
+              3px -3px #e7dfe7,
+              -3px 3px #e7dfe7,
+              0 -4px #9c9a9c,
+              -4px 0 #7b757b,
+              0 4px #424542;
+    padding: 40px;
+    min-height: 660px;
+    border-radius: 10px;
+
+    background: #04009d;
+    background: -moz-linear-gradient(top,  #04009d 0%, #06004d 100%);
+    background: -webkit-linear-gradient(linear, left top, left bottom, color-stop(0%,#04009d), color-stop(100%,#06004d));
+    background: -webkit-linear-gradient(top,  #04009d 0%,#06004d 100%);
+    background: -o-linear-gradient(top,  #04009d 0%,#06004d 100%);
+    background: -ms-linear-gradient(top,  #04009d 0%,#06004d 100%);
+    background: linear-gradient(to bottom,  #04009d 0%,#06004d 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#04009d', endColorstr='#06004d',GradientType=0 );
+}
+
+.selected {
+    position: absolute;
+    margin: 12px 0px 0px -75px;
+    z-index: 1;
+}
