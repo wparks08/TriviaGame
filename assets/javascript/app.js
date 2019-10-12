@@ -71,9 +71,28 @@ function showOptions() {
             .addClass("text-center option")
             .text(option)
             .attr("data-index", index)
-            .on("click", processAnswer);
+            .on("click", processAnswer)
         $("#options").append(optionElement);
+        addCursorOnHover(optionElement);
     });
+}
+
+function addCursorOnHover(element) {
+    $(element).on("mouseover", showCursor)
+              .on("mouseout", hideCursor);
+}
+
+function showCursor() {
+    let img = $("<img>")
+        .attr("src", "assets/images/FF7Cursor.png")
+        .addClass("selected");
+    $(this).prepend(img);
+    let audio = new Audio("assets/sounds/Select.mp3");
+    audio.play();
+}
+
+function hideCursor() {
+    $(".option .selected").remove();
 }
 
 function processAnswer() {
@@ -108,31 +127,33 @@ function showAnswerResult() {
 }
 
 function showCorrect() {
-    $("#options").append(
-        $("<h3>Correct!</h3>")
-            .on("click", nextQuestion)
-    );
+    let correctElement = $("<h3>Correct!</h3>")
+        .addClass("option")
+        .on("click", nextQuestion);
+    $("#options").append(correctElement);
+    addCursorOnHover(correctElement);
 }
 
 function showIncorrect() {
-    $("#options").append(
-        $("<h3>Inorrect!</h3>")
-            .on("click", nextQuestion)
-    );
+    let incorrectElement = $("<h3>Incorrect!</h3>")
+        .addClass("option")
+        .on("click", nextQuestion);
+    $("#options").append(incorrectElement);
+    addCursorOnHover(incorrectElement);
 }
 
 function showResults() {
     clearOptions();
     clearQuestion();
     clearTimers();
+    let startGameElement = $("<h2 id='start-game' class='mt-5 option'>Start Game</h2>")
+        .on("click", startGame);
     $("#timer").html("Click Start Game to play again!");
     $("#options")
         .append($(`<h4>Correct answers: ${correctAnswers}</h4>`))
         .append($(`<h4>Incorrect answers: ${incorrectAnswers}</h4>`))
-        .append(
-            $("<button id='start-game' class='btn btn-primary'>Start Game</button>")
-                .on("click", startGame)
-            );
+        .append(startGameElement);
+    addCursorOnHover(startGameElement);
 }
 
 function clearQuestion() {
@@ -169,12 +190,6 @@ function decrement() {
     }
 }
 
-$("#start-game").on("click", startGame);
-
-$(".option").on("mouseover", function() {
-    let img = $("<img>")
-        .attr("src", "../images/FF7Cursor.png")
-        .addClass("selected");
-    this.prepend(img);
-    this.prepend(div);
-})
+let startButton = $("#start-game");
+startButton.on("click", startGame);
+addCursorOnHover(startButton);

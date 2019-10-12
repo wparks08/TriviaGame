@@ -41,7 +41,12 @@ body {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#04009d', endColorstr='#06004d',GradientType=0 );
 }
 
+.option {
+    cursor: pointer;
+}
+
 .selected {
+    /*Thanks to codepen.io/LeonAGA/pen/rqYZNP for hints on getting the cursor implemented*/
     position: absolute;
     margin: 12px 0px 0px -75px;
     z-index: 1;
