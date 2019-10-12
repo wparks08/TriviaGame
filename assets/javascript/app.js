@@ -1,16 +1,3 @@
-const questions = [
-    new Question(
-        "Sample Question",
-        ["Sample Answer 1", "Sample Answer 2", "Sample Answer 3", "Sample Answer 4"],
-        1
-    ),
-    new Question(
-        "Sample Question number 2",
-        ["Answer 1", "Answer 2", "Answer 3", "Answer 4"],
-        3
-    )
-]; //probably move this to a standalone js file later
-
 var currentQuestion;
 var questionIndex = 0;
 const numberOfQuestions = questions.length;
@@ -106,10 +93,11 @@ function showReview() {
     if (answerGiven) {
         showAnswerResult();
     } else {
-        $("#options").append(
-            $("<h3>Out of time!</h3>")
-                .on("click", nextQuestion)
-            );
+        let outOfTime = $("<h3>Out of time!</h3>")
+            .addClass("option")
+            .on("click", nextQuestion);
+        $("#options").append(outOfTime);
+        addCursorOnHover(outOfTime);
     }
     
     setTimer(SECONDS_TO_REVIEW);
@@ -143,11 +131,16 @@ function showIncorrect() {
 }
 
 function showResults() {
+    let victory = new Audio("assets/sounds/Victory-Fanfare.mp3");
+    victory.play();
     clearOptions();
     clearQuestion();
     clearTimers();
     let startGameElement = $("<h2 id='start-game' class='mt-5 option'>Start Game</h2>")
-        .on("click", startGame);
+        .on("click", function() {
+            victory.pause();
+            startGame();
+        });
     $("#timer").html("Click Start Game to play again!");
     $("#options")
         .append($(`<h4>Correct answers: ${correctAnswers}</h4>`))
