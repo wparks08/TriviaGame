@@ -49,4 +49,4 @@ const questions = [
         ["Yoshi", "Moogle", "Chocobo", "Cactuar"],
         2
     )
-]; //probably move this to a standalone js file later
+];
