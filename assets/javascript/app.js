@@ -96,7 +96,9 @@ function showReview() {
         let outOfTime = $("<h3>Out of time!</h3>")
             .addClass("option")
             .on("click", nextQuestion);
-        $("#options").append(outOfTime);
+        let correctAnswer = $("<h3>")
+            .html(`The correct answer was:<br>${currentQuestion.options[currentQuestion.answerIndex]}`);
+        $("#options").append([outOfTime, correctAnswer]);
         addCursorOnHover(outOfTime);
     }
     
@@ -126,8 +128,11 @@ function showIncorrect() {
     let incorrectElement = $("<h3>Incorrect!</h3>")
         .addClass("option")
         .on("click", nextQuestion);
-    $("#options").append(incorrectElement);
+    let correctAnswer = $("<h3>")
+        .html(`The correct answer was:<br>${currentQuestion.options[currentQuestion.answerIndex]}`);
+    $("#options").append([incorrectElement, correctAnswer]);
     addCursorOnHover(incorrectElement);
+    
 }
 
 function showResults() {
