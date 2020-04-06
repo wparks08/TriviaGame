@@ -11,6 +11,11 @@ let secondsRemaining = 0;
 let intervalId;
 let timeoutId;
 
+const $cursor = $("<img>")
+    .attr("src", "assets/images/FF7Cursor.png")
+    .attr("alt", "selected option")
+    .addClass("selected");
+
 function startGame() {
     init();
     $("#timer").html("Time Remaining: <span id='seconds'></span> seconds");
@@ -70,11 +75,11 @@ function addCursorOnHover(element) {
 }
 
 function showCursor() {
-    let img = $("<img>")
-        .attr("src", "assets/images/FF7Cursor.png")
-        .attr("alt", "selected option")
-        .addClass("selected");
-    $(this).prepend(img);
+    $(this).prepend($cursor);
+    playSelectSound();
+}
+
+function playSelectSound() {
     let audio = new Audio("assets/sounds/Select.mp3");
     audio.play();
 }
