@@ -1,15 +1,15 @@
-var currentQuestion;
-var questionIndex = 0;
+let currentQuestion;
+let questionIndex = 0;
 const numberOfQuestions = questions.length;
-var correctAnswers = 0;
-var incorrectAnswers = 0;
-var answerGiven;
+let correctAnswers = 0;
+let incorrectAnswers = 0;
+let answerGiven;
 
 const SECONDS_TO_ANSWER = 30;
 const SECONDS_TO_REVIEW = 10;
-var secondsRemaining = 0;
-var intervalId;
-var timeoutId;
+let secondsRemaining = 0;
+let intervalId;
+let timeoutId;
 
 function startGame() {
     init();
@@ -58,7 +58,7 @@ function showOptions() {
             .addClass("text-center option")
             .text(option)
             .attr("data-index", index)
-            .on("click", processAnswer)
+            .on("click", processAnswer);
         $("#options").append(optionElement);
         addCursorOnHover(optionElement);
     });
@@ -72,6 +72,7 @@ function addCursorOnHover(element) {
 function showCursor() {
     let img = $("<img>")
         .attr("src", "assets/images/FF7Cursor.png")
+        .attr("alt", "selected option")
         .addClass("selected");
     $(this).prepend(img);
     let audio = new Audio("assets/sounds/Select.mp3");

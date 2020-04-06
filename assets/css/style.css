@@ -18,10 +18,10 @@ body {
 
 .container {
     /*Thanks to codepen.io/terrancerobb/pen/bnuqe for the FF style window and border */
-    font-family: "finalfantasy";
+    font-family: "finalfantasy", monospace;
     border: solid 2px #424542;
     box-shadow: 3px 3px #e7dfe7,
-              -3px -3px #e7dfe7,
+              3px -3px #e7dfe7,
               3px -3px #e7dfe7,
               -3px 3px #e7dfe7,
               0 -4px #9c9a9c,
@@ -33,7 +33,6 @@ body {
 
     background: #04009d;
     background: -moz-linear-gradient(top,  #04009d 0%, #06004d 100%);
-    background: -webkit-linear-gradient(linear, left top, left bottom, color-stop(0%,#04009d), color-stop(100%,#06004d));
     background: -webkit-linear-gradient(top,  #04009d 0%,#06004d 100%);
     background: -o-linear-gradient(top,  #04009d 0%,#06004d 100%);
     background: -ms-linear-gradient(top,  #04009d 0%,#06004d 100%);
@@ -48,6 +47,6 @@ body {
 .selected {
     /*Thanks to codepen.io/LeonAGA/pen/rqYZNP for hints on getting the cursor implemented*/
     position: absolute;
-    margin: 12px 0px 0px -75px;
+    margin: 12px 0 0 -75px;
     z-index: 1;
 }

@@ -8,16 +8,11 @@ class Question {
     constructor(question, options, answerIndex) {
         this.question = question;
         this.options = options;
-        this.optionCount = options.length;
         this.answerIndex = answerIndex;
         this.answeredCorrectly = false;
     }
 
     answer(index) {
-        this.answeredCorrectly = index == this.answerIndex;
-    }
-
-    getOption(index) {
-        return options[index];
+        this.answeredCorrectly = index === this.answerIndex;
     }
 }
