@@ -34,7 +34,6 @@ function nextQuestion() {
         currentQuestion = questions[questionIndex];
         showQuestion();
     } else {
-        clearOptions();
         showResults();
     }
 }
@@ -58,20 +57,23 @@ function clearOptions() {
 function showOptions() {
     clearOptions();
     $.each(currentQuestion.options, function (index, option) {
-        let optionElement = $("<h3>");
-        optionElement
-            .addClass("text-center option")
-            .text(option)
-            .attr("data-index", index)
-            .on("click", processAnswer);
-        $("#options").append(optionElement);
-        addCursorOnHover(optionElement);
+        const $optionElement = createOptionElement(option, index);
+        $("#options").append($optionElement);
+        addCursorOnHover($optionElement);
     });
+}
+
+function createOptionElement(option, index) {
+    return $("<h3>")
+        .addClass("text-center option")
+        .text(option)
+        .attr("data-index", index)
+        .on("click", processAnswer);
 }
 
 function addCursorOnHover(element) {
     $(element).on("mouseover", showCursor)
-              .on("mouseout", hideCursor);
+        .on("mouseout", hideCursor);
 }
 
 function showCursor() {
@@ -96,18 +98,7 @@ function processAnswer() {
 
 function showReview() {
     clearOptions();
-    if (answerGiven) {
-        showAnswerResult();
-    } else {
-        let outOfTime = $("<h3>Out of time!</h3>")
-            .addClass("option")
-            .on("click", nextQuestion);
-        let correctAnswer = $("<h3>")
-            .html(`The correct answer was:<br>${currentQuestion.options[currentQuestion.answerIndex]}`);
-        $("#options").append([outOfTime, correctAnswer]);
-        addCursorOnHover(outOfTime);
-    }
-    
+    answerGiven ? showAnswerResult() : showOutOfTime();
     setTimer(SECONDS_TO_REVIEW);
     startTimer(nextQuestion);
 }
@@ -120,6 +111,16 @@ function showAnswerResult() {
         showIncorrect();
         incorrectAnswers++;
     }
+}
+
+function showOutOfTime() {
+    let outOfTime = $("<h3>Out of time!</h3>")
+        .addClass("option")
+        .on("click", nextQuestion);
+    let correctAnswer = $("<h3>")
+        .html(`The correct answer was:<br>${currentQuestion.options[currentQuestion.answerIndex]}`);
+    $("#options").append([outOfTime, correctAnswer]);
+    addCursorOnHover(outOfTime);
 }
 
 function showCorrect() {
@@ -138,7 +139,7 @@ function showIncorrect() {
         .html(`The correct answer was:<br>${currentQuestion.options[currentQuestion.answerIndex]}`);
     $("#options").append([incorrectElement, correctAnswer]);
     addCursorOnHover(incorrectElement);
-    
+
 }
 
 function showResults() {
@@ -148,7 +149,7 @@ function showResults() {
     clearQuestion();
     clearTimers();
     let startGameElement = $("<h2 id='start-game' class='mt-5 option'>Start Game</h2>")
-        .on("click", function() {
+        .on("click", function () {
             victory.pause();
             startGame();
         });
