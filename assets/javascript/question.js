@@ -15,4 +15,12 @@ class Question {
     answer(index) {
         this.answeredCorrectly = index === this.answerIndex;
     }
+
+    getCorrectAnswer() {
+        return this.options[this.answerIndex];
+    }
+
+    getOptions(callback) {
+        return this.options.map((option, index) => callback(option, index));
+    }
 }
