@@ -30,12 +30,19 @@ function init() {
 }
 
 function nextQuestion() {
-    if (++questionIndex < numberOfQuestions) {
-        currentQuestion = questions[questionIndex];
-        showQuestion();
-    } else {
-        showResults();
-    }
+    hasNextQuestion()
+        ? loadNextQuestion() && showQuestion()
+        : showResults();
+}
+
+function hasNextQuestion() {
+    return (questionIndex + 1) < numberOfQuestions;
+}
+
+function loadNextQuestion() {
+    questionIndex++;
+    currentQuestion = questions[questionIndex];
+    return currentQuestion; //truthy. Not sure I like this, may change later.
 }
 
 function showQuestion() {
@@ -56,19 +63,18 @@ function clearOptions() {
 
 function showOptions() {
     clearOptions();
-    $.each(currentQuestion.options, function (index, option) {
-        const $optionElement = createOptionElement(option, index);
-        $("#options").append($optionElement);
-        addCursorOnHover($optionElement);
-    });
+    const $optionsArray = currentQuestion.getOptions(createOptionElement);
+    $("#options").append($optionsArray);
 }
 
 function createOptionElement(option, index) {
-    return $("<h3>")
+    const $option = $("<h3>")
         .addClass("text-center option")
         .text(option)
         .attr("data-index", index)
         .on("click", processAnswer);
+    addCursorOnHover($option);
+    return $option
 }
 
 function addCursorOnHover(element) {
@@ -114,32 +120,34 @@ function showAnswerResult() {
 }
 
 function showOutOfTime() {
-    let outOfTime = $("<h3>Out of time!</h3>")
-        .addClass("option")
-        .on("click", nextQuestion);
-    let correctAnswer = $("<h3>")
-        .html(`The correct answer was:<br>${currentQuestion.options[currentQuestion.answerIndex]}`);
+    let outOfTime = createNextQuestionElement("Out of time!");
+    let correctAnswer = createCorrectAnswerElement(currentQuestion.getCorrectAnswer());
     $("#options").append([outOfTime, correctAnswer]);
     addCursorOnHover(outOfTime);
 }
 
 function showCorrect() {
-    let correctElement = $("<h3>Correct!</h3>")
-        .addClass("option")
-        .on("click", nextQuestion);
+    let correctElement = createNextQuestionElement("Correct!");
     $("#options").append(correctElement);
     addCursorOnHover(correctElement);
 }
 
 function showIncorrect() {
-    let incorrectElement = $("<h3>Incorrect!</h3>")
-        .addClass("option")
-        .on("click", nextQuestion);
-    let correctAnswer = $("<h3>")
-        .html(`The correct answer was:<br>${currentQuestion.options[currentQuestion.answerIndex]}`);
+    let incorrectElement = createNextQuestionElement("Incorrect!");
+    let correctAnswer = createCorrectAnswerElement(currentQuestion.getCorrectAnswer());
     $("#options").append([incorrectElement, correctAnswer]);
     addCursorOnHover(incorrectElement);
+}
 
+function createNextQuestionElement(text) {
+    return $(`<h3>${text}</h3>`)
+        .addClass("option")
+        .on("click", nextQuestion);
+}
+
+function createCorrectAnswerElement(answer) {
+    return $("<h3>")
+        .html(`The correct answer was:<br>${answer}`);
 }
 
 function showResults() {
